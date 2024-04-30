@@ -4,6 +4,8 @@ import {
   CardHeaderContainer,
   CardProps,
   CardSpan,
+  StyledFooter,
+  StyledFooterItem,
   StyledImage,
   StyledLink,
   StyledSubTitle,
@@ -49,6 +51,14 @@ function CardImage({ ...props }: CardImageProps) {
   );
 }
 
+function CardFooter({ children }: { children: ReactNode }) {
+  return <StyledFooter>{children}</StyledFooter>;
+}
+
+function CardFooterItem({ children }: { children: ReactNode }) {
+  return <StyledFooterItem>{children}</StyledFooterItem>;
+}
+
 Card.Title = Title;
 Card.SubTitle = SubTitle;
 Card.Header = CardHeader;
@@ -56,5 +66,7 @@ Card.Label = CardLabel;
 Card.Text = CardText;
 Card.Link = CardLink;
 Card.Image = CardImage;
+Card.Footer = CardFooter;
+Card.FooterItem = CardFooterItem;
 
 export { Card };

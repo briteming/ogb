@@ -5,6 +5,7 @@ export const SearchFormContainer = styled.form`
   flex-direction: column;
   width: 100%;
   gap: 0.75rem;
+  margin-top: 4.5rem;
 `
 
 export const SearchFormHeader = styled.header`
