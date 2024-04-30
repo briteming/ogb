@@ -9,6 +9,7 @@ import {
 
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { SearchForm } from "../../components/SearchForm";
+import { Link } from "react-router-dom";
 
 export function Home() {
   return (
@@ -19,7 +20,10 @@ export function Home() {
           <div style={{ flex: 1 }}>
             <Card.Header>
               <Card.Title>Marco Aurélio</Card.Title>
-              <Card.Link>
+              <Card.Link
+                href="https://github.com/omarcoaur3lio"
+                target="_blank"
+              >
                 GitHub
                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
               </Card.Link>
@@ -31,7 +35,7 @@ export function Home() {
             </Card.Text>
             <Card.Footer>
               <Card.FooterItem>
-                <FontAwesomeIcon icon={faGithub} size="1x" />
+                <FontAwesomeIcon icon={faGithub} />
                 <span>omarcoaur3lio</span>
               </Card.FooterItem>
               <Card.FooterItem>
@@ -49,22 +53,24 @@ export function Home() {
       <SearchForm />
       <ContentContainer>
         {Array.from({ length: 5 }).map((_, index) => (
-          <Card key={index}>
-            <Card.Header>
-              <Card.SubTitle>
-                JavaScript data types and data structures
-              </Card.SubTitle>
-              <Card.Label>Há 1 dia</Card.Label>
-            </Card.Header>
-            <Card.Text>
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn.
-            </Card.Text>
-          </Card>
+          <Link to={`/issue`} key={index} style={{ textDecoration: "none" }}>
+            <Card>
+              <Card.Header>
+                <Card.SubTitle>
+                  JavaScript data types and data structures
+                </Card.SubTitle>
+                <Card.Label>Há 1 dia</Card.Label>
+              </Card.Header>
+              <Card.Text>
+                Programming languages all have built-in data structures, but
+                these often differ from one language to another. This article
+                attempts to list the built-in data structures available in
+                JavaScript and what properties they have. These can be used to
+                build other data structures. Wherever possible, comparisons with
+                other languages are drawn.
+              </Card.Text>
+            </Card>
+          </Link>
         ))}
       </ContentContainer>
     </>

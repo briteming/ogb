@@ -1,4 +1,4 @@
-import { ImgHTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ImgHTMLAttributes, ReactNode } from "react";
 import {
   CardContainer,
   CardHeaderContainer,
@@ -12,6 +12,7 @@ import {
   StyledText,
   StyledTitle,
 } from "./styles";
+import { Link } from "react-router-dom";
 
 function Card({ type, children }: CardProps) {
   return <CardContainer type={type}>{children}</CardContainer>;
@@ -37,8 +38,16 @@ function CardText({ children }: { children: ReactNode }) {
   return <StyledText>{children}</StyledText>;
 }
 
-function CardLink({ children }: { children: ReactNode }) {
-  return <StyledLink href="#">{children}</StyledLink>;
+interface CardLinkProps extends HTMLAttributes<HTMLAnchorElement> {
+  href: string;
+  target?: "_blank" | "_self" | "_parent" | "_top";
+}
+function CardLink({ children, href, ...props }: CardLinkProps) {
+  return (
+    <Link to={href} style={{ textDecoration: "none" }} {...props}>
+      <StyledLink>{children}</StyledLink>
+    </Link>
+  );
 }
 
 interface CardImageProps extends ImgHTMLAttributes<HTMLImageElement> {}

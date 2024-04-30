@@ -85,8 +85,8 @@ export const StyledLink = styled.a`
   gap: 0.5rem;
   border: 1px solid transparent;
   padding: 0 0 0.25rem 0;
-  
-transition: border-bottom 0.2s;
+  cursor: pointer;
+  transition: border-bottom 0.2s;
 
   &:hover {
     border-bottom: 1px solid ${(props) => props.theme['blue']};
