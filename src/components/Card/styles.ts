@@ -73,24 +73,28 @@ export const StyledText = styled.p`
   -webkit-box-orient: vertical;
   `
 
-export const StyledLink = styled.a`
-  font-size: 0.75rem;
-  color: ${(props) => props.theme['blue']};
-  font-weight: bold;
-  line-height: 160%;
-  text-decoration: none;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: 1px solid transparent;
-  padding: 0 0 0.25rem 0;
-  cursor: pointer;
-  transition: border-bottom 0.2s;
+export const StyledLink = styled.div`
 
-  &:hover {
-    border-bottom: 1px solid ${(props) => props.theme['blue']};
+  .link {
+    font-size: 0.75rem;
+    color: ${(props) => props.theme['blue']};
+    font-weight: bold;
+    line-height: 160%;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid transparent;
+    padding: 0 0 0.25rem 0;
+    cursor: pointer;
+    transition: border-bottom 0.2s;
+  
+    &:hover {
+      border-bottom: 1px solid ${(props) => props.theme['blue']};
+    }
   }
+
 `
 
 export const StyledImage = styled.div`

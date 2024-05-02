@@ -10,41 +10,38 @@ import {
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { SearchForm } from "../../components/SearchForm";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { SearchContext } from "../../contexts/SearchContext";
 
 export function Home() {
+  const { userData } = useContext(SearchContext);
+
   return (
     <>
       <Card type="profile">
         <CardProfileContainer>
-          <Card.Image src="https://github.com/omarcoaur3lio.png" />
+          <Card.Image src={userData.avatar_url} />
           <div style={{ flex: 1 }}>
             <Card.Header>
-              <Card.Title>Marco Aurélio</Card.Title>
-              <Card.Link
-                href="https://github.com/omarcoaur3lio"
-                target="_blank"
-              >
+              <Card.Title>{userData.name}</Card.Title>
+              <Card.Link href={userData.html_url} target="_blank">
                 GitHub
                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
               </Card.Link>
             </Card.Header>
-            <Card.Text>
-              Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-              viverra massa quam dignissim aenean malesuada suscipit. Nunc,
-              volutpat pulvinar vel mass.
-            </Card.Text>
+            <Card.Text>{userData.bio}</Card.Text>
             <Card.Footer>
               <Card.FooterItem>
                 <FontAwesomeIcon icon={faGithub} />
-                <span>omarcoaur3lio</span>
+                <span>{userData.login}</span>
               </Card.FooterItem>
               <Card.FooterItem>
                 <FontAwesomeIcon icon={faBuilding} />
-                <span>Synter</span>
+                <span>{userData.company}</span>
               </Card.FooterItem>
               <Card.FooterItem>
                 <FontAwesomeIcon icon={faUserGroup} />
-                <span>32 seguidores</span>
+                <span>{userData.followers} seguidores</span>
               </Card.FooterItem>
             </Card.Footer>
           </div>

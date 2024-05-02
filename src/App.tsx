@@ -3,14 +3,17 @@ import { GlobalStyle } from "./styles/global";
 import { defaultTheme } from "./styles/themes/default";
 import { Router } from "./Rauter";
 import { BrowserRouter } from "react-router-dom";
+import { SearchProvider } from "./contexts/SearchContext";
 
 export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
+      <SearchProvider>
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </SearchProvider>
     </ThemeProvider>
   );
 }

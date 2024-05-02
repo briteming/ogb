@@ -44,9 +44,16 @@ interface CardLinkProps extends HTMLAttributes<HTMLAnchorElement> {
 }
 function CardLink({ children, href, ...props }: CardLinkProps) {
   return (
-    <Link to={href} style={{ textDecoration: "none" }} {...props}>
-      <StyledLink>{children}</StyledLink>
-    </Link>
+    <StyledLink>
+      <Link
+        className="link"
+        to={href}
+        style={{ textDecoration: "none" }}
+        {...props}
+      >
+        {children}
+      </Link>
+    </StyledLink>
   );
 }
 
