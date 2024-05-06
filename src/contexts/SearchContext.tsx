@@ -1,7 +1,15 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { api } from "../api/axios";
 interface SearchContextType {
   userData: GitHubUser;
+  fetchIssues: (issue: string) => Promise<void>;
+  issues: Issue[];
 }
 
 export const SearchContext = createContext({} as SearchContextType);
@@ -19,11 +27,20 @@ interface GitHubUser {
   followers: number;
   html_url: string;
 }
+
+interface Issue {
+  title: string;
+  body: string;
+  number: number;
+  created_at: string;
+}
 export function SearchProvider({ children }: SearchProviderProps) {
   const [userData, setUserData] = useState({} as GitHubUser);
+  const [issues, setIssues] = useState<Issue[]>([]);
 
   useEffect(() => {
     fetchUserData();
+    fetchIssues();
   }, []);
 
   async function fetchUserData() {
@@ -32,8 +49,6 @@ export function SearchProvider({ children }: SearchProviderProps) {
     if (!data) {
       return;
     }
-
-    console.log(data);
 
     setUserData({
       avatar_url: data.avatar_url,
@@ -46,8 +61,17 @@ export function SearchProvider({ children }: SearchProviderProps) {
     });
   }
 
+  const fetchIssues = useCallback(async (query = "") => {
+    const response = await api.get(`search/issues`, {
+      params: {
+        q: query + ` repo:${import.meta.env.VITE_REPO_NAME}`,
+      },
+    });
+    setIssues(response.data.items);
+  }, []);
+
   return (
-    <SearchContext.Provider value={{ userData }}>
+    <SearchContext.Provider value={{ userData, issues, fetchIssues }}>
       {children}
     </SearchContext.Provider>
   );

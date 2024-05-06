@@ -13,8 +13,15 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { SearchContext } from "../../contexts/SearchContext";
 
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
+dayjs.locale("pt-br");
+
 export function Home() {
-  const { userData } = useContext(SearchContext);
+  const { userData, issues } = useContext(SearchContext);
 
   return (
     <>
@@ -49,23 +56,18 @@ export function Home() {
       </Card>
       <SearchForm />
       <ContentContainer>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <Link to={`/issue`} key={index} style={{ textDecoration: "none" }}>
+        {issues.map((issue) => (
+          <Link
+            to={`/issue`}
+            key={issue.number}
+            style={{ textDecoration: "none" }}
+          >
             <Card>
               <Card.Header>
-                <Card.SubTitle>
-                  JavaScript data types and data structures
-                </Card.SubTitle>
-                <Card.Label>Há 1 dia</Card.Label>
+                <Card.SubTitle>{issue.title}</Card.SubTitle>
+                <Card.Label>{dayjs().to(issue.created_at)}</Card.Label>
               </Card.Header>
-              <Card.Text>
-                Programming languages all have built-in data structures, but
-                these often differ from one language to another. This article
-                attempts to list the built-in data structures available in
-                JavaScript and what properties they have. These can be used to
-                build other data structures. Wherever possible, comparisons with
-                other languages are drawn.
-              </Card.Text>
+              <Card.Text>{issue.body}</Card.Text>
             </Card>
           </Link>
         ))}
