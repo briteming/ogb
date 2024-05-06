@@ -21,7 +21,8 @@ dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
 
 export function Home() {
-  const { userData, issues } = useContext(SearchContext);
+  const { userData, issues, completeIssue, clearCompleteIssue } =
+    useContext(SearchContext);
 
   return (
     <>
@@ -58,9 +59,14 @@ export function Home() {
       <ContentContainer>
         {issues.map((issue) => (
           <Link
-            to={`/issue`}
+            to={`/post/${issue.number}`}
             key={issue.number}
             style={{ textDecoration: "none" }}
+            onClick={() => {
+              if (issue.number !== completeIssue.number) {
+                clearCompleteIssue();
+              }
+            }}
           >
             <Card>
               <Card.Header>

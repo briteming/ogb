@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { SearchContext } from "../../contexts/SearchContext";
 import {
   SearchFormContainer,
   SearchFormHeader,
@@ -5,11 +7,13 @@ import {
 } from "./styles";
 
 export function SearchForm() {
+  const { issues } = useContext(SearchContext);
+  
   return (
     <SearchFormContainer>
       <SearchFormHeader>
         <p>Publicações</p>
-        <span>6 publicações</span>
+        <span>{issues.length} publicações</span>
       </SearchFormHeader>
       <SearchFormInput type="text" placeholder="Buscar conteúdo" />
     </SearchFormContainer>

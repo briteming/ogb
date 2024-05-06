@@ -8,8 +8,10 @@ import {
 import { api } from "../api/axios";
 interface SearchContextType {
   userData: GitHubUser;
-  fetchIssues: (issue: string) => Promise<void>;
   issues: Issue[];
+  completeIssue: Issue;
+  fetchCompleteIssue: (issue: number) => Promise<void>;
+  clearCompleteIssue: () => void;
 }
 
 export const SearchContext = createContext({} as SearchContextType);
@@ -33,10 +35,16 @@ interface Issue {
   body: string;
   number: number;
   created_at: string;
+  html_url: string;
+  comments?: number;
 }
 export function SearchProvider({ children }: SearchProviderProps) {
   const [userData, setUserData] = useState({} as GitHubUser);
   const [issues, setIssues] = useState<Issue[]>([]);
+  const [completeIssue, setCompleteIssue] = useState({} as Issue);
+
+  const GITHUBUSERNAME = import.meta.env.VITE_USER_LOGIN;
+  const GITHUBREPONAME = import.meta.env.VITE_REPO_NAME;
 
   useEffect(() => {
     fetchUserData();
@@ -44,7 +52,7 @@ export function SearchProvider({ children }: SearchProviderProps) {
   }, []);
 
   async function fetchUserData() {
-    const { data } = await api.get(`/users/${import.meta.env.VITE_USER_LOGIN}`);
+    const { data } = await api.get(`/users/${GITHUBUSERNAME}`);
 
     if (!data) {
       return;
@@ -64,14 +72,40 @@ export function SearchProvider({ children }: SearchProviderProps) {
   const fetchIssues = useCallback(async (query = "") => {
     const response = await api.get(`search/issues`, {
       params: {
-        q: query + ` repo:${import.meta.env.VITE_REPO_NAME}`,
+        q: query + ` repo:${GITHUBUSERNAME}/${GITHUBREPONAME}`,
       },
     });
     setIssues(response.data.items);
   }, []);
 
+  const fetchCompleteIssue = useCallback(async (issueNumber: number) => {
+    const response = await api.get(
+      `repos/${GITHUBUSERNAME}/${GITHUBREPONAME}/issues/${issueNumber}`
+    );
+    setCompleteIssue({
+      title: response.data.title,
+      body: response.data.body,
+      number: response.data.number,
+      created_at: response.data.created_at,
+      comments: response.data.comments,
+      html_url: response.data.html_url,
+    });
+  }, []);
+
+  function clearCompleteIssue() {
+    setCompleteIssue({} as Issue);
+  }
+
   return (
-    <SearchContext.Provider value={{ userData, issues, fetchIssues }}>
+    <SearchContext.Provider
+      value={{
+        userData,
+        issues,
+        fetchCompleteIssue,
+        completeIssue,
+        clearCompleteIssue,
+      }}
+    >
       {children}
     </SearchContext.Provider>
   );
