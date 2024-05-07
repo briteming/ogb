@@ -34,7 +34,7 @@ export const ContentContainer = styled.div`
 
     code {
       background-color: #112131;
-      padding: 0 0.5rem;
+      font-size: 0.875rem;
       border-radius: 0.25rem;
     }
   }

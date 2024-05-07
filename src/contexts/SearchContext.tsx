@@ -10,6 +10,7 @@ interface SearchContextType {
   userData: GitHubUser;
   issues: Issue[];
   completeIssue: Issue;
+  fetchIssues: (query?: string) => Promise<void>;
   fetchCompleteIssue: (issue: number) => Promise<void>;
   clearCompleteIssue: () => void;
 }
@@ -104,6 +105,7 @@ export function SearchProvider({ children }: SearchProviderProps) {
         fetchCompleteIssue,
         completeIssue,
         clearCompleteIssue,
+        fetchIssues,
       }}
     >
       {children}
