@@ -27,20 +27,33 @@ export const SearchFormHeader = styled.header`
 `
 
 export const SearchFormInput = styled.input`
-  background-color: ${(props) => props.theme['base-input']};
-  border: 1px solid ${(props) => props.theme['base-border']};
-  border-radius: 6px;
+  flex: 1;
   padding: 0.75rem 1rem;
   font-size: 1rem;
   line-height: 160%;
   color: ${(props) => props.theme['base-text']};
-
+  background-color: transparent;
+  border: 1px solid transparent;
+  
   &::placeholder {
     color: ${(props) => props.theme['base-label']};
   }
-
+  
   &:focus {
-    border: 1px solid ${(props) => props.theme['blue']};
     box-shadow: none;
+  }
+  `
+
+export const SearchFormInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-right: 1rem;
+  border-radius: 6px;
+  border: 1px solid ${(props) => props.theme['base-border']};
+  background-color: ${(props) => props.theme['base-input']};
+
+  &:focus-within {
+    border: 1px solid ${(props) => props.theme['blue']};
   }
 `
